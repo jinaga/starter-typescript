@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-import * as Jimp from 'jimp';
 import * as path from 'path';
+
+const Jimp = require('jimp');
 
 async function resize(fileName: string, width: number, height: number, mimeType: string) {
   if ((width && width > 2048) || (height && height > 2048)) {
