@@ -19,7 +19,7 @@
     "es6-promise": "^4.2.8",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
-    "jimp": "^0.7.0",
+    "jimp": "^0.8.0",
     "jinaga": "^2.4.2",
     "jsonwebtoken": "^8.5.1",
     "passport": "^0.4.0",
