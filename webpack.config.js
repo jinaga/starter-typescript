@@ -54,7 +54,7 @@ function client() {
     })).concat([
       new WorkboxPlugin.GenerateSW({
         swDest: 'scripts/service-worker.js',
-        importsDirectory: 'scripts'
+        inlineWorkboxRuntime: true
       }),
       new CopyWebpackPlugin([
         {
@@ -76,45 +76,47 @@ function client() {
   };
 }
 
+const server = {
+  // Input
+  entry: './src/server/server.ts',
+  resolve: {
+    extensions: ['.js', '.ts'],
+    alias: {
+      '@shared': path.resolve(__dirname, 'src/shared'),
+    },
+  },
+
+  // Processing
+  module: {
+    rules: [
+      {
+        test: /\.ts$/,
+        include: [
+          path.resolve(__dirname, 'src/server'),
+          path.resolve(__dirname, 'src/shared'),
+        ],
+        use: 'ts-loader',
+        exclude: /node-modules/,
+      },
+    ],
+  },
+
+  // Output
+  mode: 'production',
+  target: 'node',
+  node: {
+    __dirname: false,
+    __filename: false,
+  },
+  devtool: 'source-map',
+  output: {
+    filename: 'server.js',
+    path: path.resolve(__dirname, 'dist'),
+  },
+  externals: [nodeExternals()],
+};
+
 module.exports = [
   client(),
-  {
-    // Input
-    entry: './src/server/server.ts',
-    resolve: {
-      extensions: ['.js', '.ts'],
-      alias: {
-        '@shared': path.resolve(__dirname, 'src/shared'),
-      },
-    },
-
-    // Processing
-    module: {
-      rules: [
-        {
-          test: /\.ts$/,
-          include: [
-            path.resolve(__dirname, 'src/server'),
-            path.resolve(__dirname, 'src/shared'),
-          ],
-          use: 'ts-loader',
-          exclude: /node-modules/,
-        },
-      ],
-    },
-
-    // Output
-    mode: 'production',
-    target: 'node',
-    node: {
-      __dirname: false,
-      __filename: false,
-    },
-    devtool: 'source-map',
-    output: {
-      filename: 'server.js',
-      path: path.resolve(__dirname, 'dist'),
-    },
-    externals: [nodeExternals()],
-  },
+  server
 ];
