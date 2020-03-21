@@ -1,6 +1,6 @@
 # Jinaga Starter Kit for TypeScript
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/jinaga/starter-typescript.svg)](https://greenkeeper.io/)
+
 
 Jinaga runs both on the server and in the browser, so that it can exchange facts between the two.
 This starter kit uses Webpack to bundle both sides.
