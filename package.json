@@ -24,7 +24,7 @@
     "jsonwebtoken": "^8.5.1",
     "passport": "^0.4.1",
     "passport-twitter": "^1.0.4",
-    "pg": "^7.18.1",
+    "pg": "^7.18.2",
     "webpack-node-externals": "^1.7.2"
   },
   "devDependencies": {
