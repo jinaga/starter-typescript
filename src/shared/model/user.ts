@@ -41,7 +41,7 @@ export class UserName {
 
 export function authorizeUser(a: AuthorizationRules) {
     return (a
-        .no(User.Type)
+        .any(User.Type)
         .type(UserName.Type, j.for(UserName.user))
     );
 }
