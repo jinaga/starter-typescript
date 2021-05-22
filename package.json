@@ -18,7 +18,7 @@
     "cookie-parser": "^1.4.5",
     "es6-promise": "^4.2.8",
     "express": "^4.17.1",
-    "express-session": "^1.17.1",
+    "express-session": "^1.17.2",
     "jimp": "^0.16.1",
     "jinaga": "^2.5.2",
     "jsonwebtoken": "^8.5.1",
