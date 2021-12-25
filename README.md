@@ -24,48 +24,28 @@ npm install
 ## Database Setup
 
 Jinaga saves its facts in PostgreSQL.
-Create a PostgreSQL database, set up the dev user, and then run the setup script.
-
-To create the datbase run:
+The easiest way to start up a database is to use Docker.
 
 ```bash
-psql -h localhost -U postgres postgres
-```
-
-And then enter:
-
-```
-CREATE DATABASE myapplication;
-```
-
-And then, create the user.
-This is run once per server:
-
-```
-CREATE USER dev WITH
-  LOGIN
-  ENCRYPTED PASSWORD 'devpassword'
-  NOSUPERUSER
-  INHERIT
-  NOCREATEDB
-  NOCREATEROLE
-  NOREPLICATION
-  VALID UNTIL 'infinity';
-```
-
-Quit that session with `\q` (or Ctrl+D), and then run the setup script.
-The setup script is located in `node_modules/jinaga/setup.sql`.
-You can run it from the command line like this:
-
-```bash
-psql -h localhost -f node_modules/jinaga/setup.sql -U postgres myapplication
+docker run -d --name jinaga-postgres -p5432:5432 -e POSTGRES_PASSWORD=secretpw -e APP_USERNAME=dev -e APP_PASSWORD=devpw -e APP_DATABASE=myapplication jinaga/jinaga-postgres-fact-keystore
 ```
 
 For complete instructions, see [Jinaga PostgreSQL Setup](https://jinaga.com/documents/getting-started/creating-an-application/postgresql-setup/).
 
-## Building
+## Developing
 
-To build:
+To run in development mode:
+
+```bash
+npm run dev
+```
+
+This will watch the source code for changes and rebuild as necessary.
+It will restart the server to load those changes.
+
+## Release Build
+
+To build for release:
 
 ```bash
 npm run build
@@ -81,16 +61,5 @@ To run:
 ```bash
 npm start
 ```
-
-## Developing
-
-After the first build, you will probably want to run in development mode:
-
-```bash
-npm run dev
-```
-
-This will watch the source code for changes and rebuild as necessary.
-It will restart the server to load those changes.
 
 Build something incredible!
