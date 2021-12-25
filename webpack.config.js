@@ -1,122 +1,53 @@
 const path = require('path');
-const fs = require('fs');
-const nodeExternals = require('webpack-node-externals');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const WorkboxPlugin = require('workbox-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-function client() {
-  const views = fs.readdirSync(path.resolve(__dirname, "views"))
-    .filter(file => path.extname(file) === '.html')
-    .map(file => path.basename(file, '.html'));
-  const scripts = fs.readdirSync(path.resolve(__dirname, "src/client"))
-    .filter(file => path.extname(file) === '.ts')
-    .map(file => path.basename(file, '.ts'));
-  const names = views.filter(name => scripts.includes(name));
-
-  return {
-    // Input
-    entry: names.reduce((e, name) =>
-      ({ ...e, [name]: `./src/client/${name}.ts` }),
-      {}
-    ),
+module.exports = {
+    // Inputs
+    entry: {
+        index: "./src/client/index.ts"
+    },
     resolve: {
-      extensions: ['.js', '.ts', '.scss'],
-      alias: {
-        '@shared': path.resolve(__dirname, 'src/shared'),
-        'jinaga': 'jinaga/dist/jinaga',
-      },
+        extensions: [".js", ".ts", ".scss"],
+        alias: {
+            "@shared": path.resolve(__dirname, "./src/shared"),
+            "jinaga": "jinaga/dist/jinaga",
+        }
     },
 
     // Processing
+    mode: "production",
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: "./views/index.html",
+            publicPath: "/scripts/",
+            filename: "../server/[name].html",
+        }),
+    ],
     module: {
-      rules: [
-        {
-          test: /\.ts$/,
-          include: [
-            path.resolve(__dirname, 'src/client'),
-            path.resolve(__dirname, 'src/shared'),
-          ],
-          use: 'ts-loader',
-          exclude: /node-modules/,
+        rules: [{
+            test: /\.ts$/,
+            loader: "ts-loader",
+            include: [
+                path.resolve(__dirname, "./src/client"),
+                path.resolve(__dirname, "./src/shared")
+            ],
+            exclude: [/node_modules/]
         },
         {
             test: /\.(scss|css)$/,
-
             use: ['style-loader', 'css-loader', 'sass-loader']
-        }
-      ]
-    },
-    plugins: names.map(name => new HtmlWebpackPlugin({
-      chunks: [name],
-      template: `views/${name}.html`,
-      filename: `${name}.html`
-    })).concat([
-      new WorkboxPlugin.GenerateSW({
-        swDest: 'scripts/service-worker.js',
-        inlineWorkboxRuntime: true
-      }),
-      new CopyWebpackPlugin([
+        },
         {
-          from: path.resolve(__dirname, 'src/server/images'),
-          to:   path.resolve(__dirname, 'dist/images')
-        } 
-      ])
-    ]),
+            test: /\.js$/,
+            enforce: "pre",
+            use: ["source-map-loader"]
+        }]
+    },
 
-    // Output
-    mode: 'production',
-    target: 'web',
-    devtool: 'source-map',
+    // Outputs
     output: {
-      filename: 'scripts/[name]-[hash].js',
-      path: path.resolve(__dirname, 'dist'),
-      publicPath: '/',
+        filename: "[name]-[contenthash].js",
+        path: path.resolve(__dirname, "dist", "scripts"),
     },
-  };
-}
-
-const server = {
-  // Input
-  entry: './src/server/server.ts',
-  resolve: {
-    extensions: ['.js', '.ts'],
-    alias: {
-      '@shared': path.resolve(__dirname, 'src/shared'),
-    },
-  },
-
-  // Processing
-  module: {
-    rules: [
-      {
-        test: /\.ts$/,
-        include: [
-          path.resolve(__dirname, 'src/server'),
-          path.resolve(__dirname, 'src/shared'),
-        ],
-        use: 'ts-loader',
-        exclude: /node-modules/,
-      },
-    ],
-  },
-
-  // Output
-  mode: 'production',
-  target: 'node',
-  node: {
-    __dirname: false,
-    __filename: false,
-  },
-  devtool: 'source-map',
-  output: {
-    filename: 'server.js',
-    path: path.resolve(__dirname, 'dist'),
-  },
-  externals: [nodeExternals()],
+    devtool: "source-map",
 };
-
-module.exports = [
-  client(),
-  server
-];
