@@ -1,5 +1,5 @@
 import * as Express from "express";
-import * as passport from "passport";
+import passport = require('passport');
 import { Strategy as TwitterStrategy } from "passport-twitter";
 
 export function configureAuthenticationTwitter(app: Express.Application) {

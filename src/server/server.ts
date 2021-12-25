@@ -1,7 +1,7 @@
 import * as bodyParser from 'body-parser';
-import * as cookieParser from 'cookie-parser';
-import * as express from 'express';
-import * as session from 'express-session';
+import cookieParser = require('cookie-parser');
+import express = require('express');
+import session = require('express-session');
 import * as http from 'http';
 import { configureAuthentication } from './authentication';
 import { configureJinaga } from './jinaga-config';

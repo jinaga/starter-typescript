@@ -1,20 +1,9 @@
 import { JinagaBrowser } from 'jinaga';
 import { User, UserName } from '@shared/model/user';
 import { Domain, Visit } from '@shared/model/visit';
-import { registerServiceWorker } from './util/register-service-worker';
 
 const j = JinagaBrowser.create({
   httpEndpoint: '/jinaga'
-});
-
-window.addEventListener('load', () => {
-  registerServiceWorker(refresh => {
-    // window.confirm is really bad. Please change this.
-    const shouldRefresh = window.confirm('A new version of the application is available. Would you like to refresh?');
-    if (shouldRefresh) {
-      refresh();
-    }
-  });
 });
 
 (async () => {
