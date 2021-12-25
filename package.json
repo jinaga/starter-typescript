@@ -9,7 +9,7 @@
     "build": "webpack && tsc --project src/server",
     "start": "node -r tsconfig-paths/register dist/server/server",
     "dev": "concurrently -k \"npm:dev:server\" \"npm:dev:client\"",
-    "dev:server": "tsc-watch --project src/server --onSuccess \"npm start\"",
+    "dev:server": "NODE_ENV=development tsc-watch --project src/server --onSuccess \"npm start\"",
     "dev:client": "webpack --watch",
     "test": "jest",
     "test:watch": "jest --watch"
