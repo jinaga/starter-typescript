@@ -3,7 +3,7 @@ import * as path from 'path';
 
 const Jimp = require('jimp');
 
-async function resize(fileName: string, width: number, height: number, mimeType: string) {
+async function resize(fileName: string, width: number | undefined, height: number | undefined, mimeType: string) {
   if ((width && width > 2048) || (height && height > 2048)) {
     throw new Error('Requested image size too large.');
   }
