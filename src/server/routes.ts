@@ -35,8 +35,4 @@ export function configureRoutes(app: Express, authenticate: Handler) {
   });
 
   app.use('/scripts', ExpressStatic(path.join(__dirname, 'scripts')));
-
-  app.get('/service-worker.js', (req, res) => {
-    res.sendFile(path.join(__dirname, './scripts/service-worker.js'));
-  });
 }
