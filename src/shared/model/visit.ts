@@ -28,7 +28,7 @@ export class Visit {
     }
 
     static user(v: Visit) {
-        ensure(v).has("user");
+        ensure(v).has("user", User);
         return j.match(v.user);
     }
 }
