@@ -1,4 +1,4 @@
-import { Jinaga as j, AuthorizationRules } from "jinaga";
+import { Jinaga as j, AuthorizationRules, ensure } from "jinaga";
 
 export class User {
     static Type = 'Jinaga.User';
@@ -20,7 +20,7 @@ export class UserName {
     ) { }
 
     static user(n: UserName) {
-        (<any>n).has('user');
+        ensure(n).has('user', User);
         return j.match(n.user);
     }
 
@@ -41,7 +41,6 @@ export class UserName {
 
 export function authorizeUser(a: AuthorizationRules) {
     return (a
-        .any(User.Type)
         .type(UserName.Type, j.for(UserName.user))
     );
 }
