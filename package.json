@@ -28,7 +28,7 @@
     "passport": "^0.5.2",
     "passport-twitter": "^1.0.4",
     "pg": "^8.7.3",
-    "tsconfig-paths": "^3.14.0",
+    "tsconfig-paths": "^3.14.1",
     "webpack-node-externals": "^3.0.0"
   },
   "devDependencies": {
