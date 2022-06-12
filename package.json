@@ -25,7 +25,7 @@
     "jimp": "^0.16.1",
     "jinaga": "^3.0.8",
     "jsonwebtoken": "^8.5.1",
-    "passport": "^0.5.2",
+    "passport": "^0.6.0",
     "passport-twitter": "^1.0.4",
     "pg": "^8.7.3",
     "tsconfig-paths": "^3.14.1",
