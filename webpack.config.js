@@ -10,7 +10,7 @@ module.exports = {
         extensions: [".js", ".ts", ".scss"],
         alias: {
             "@shared": path.resolve(__dirname, "./src/shared"),
-            "jinaga": "jinaga/dist/jinaga",
+            "jinaga": "jinaga/dist/jinaga-client",
         }
     },
 
