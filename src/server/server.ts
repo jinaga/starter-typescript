@@ -18,6 +18,7 @@ app.use(session({
 app.use(cookieParser());
 app.set('port', process.env.PORT || 8080);
 app.use(bodyParser.json());
+app.use(bodyParser.text());
 
 const authenticate = configureAuthentication(app);
 configureRoutes(app, authenticate);
